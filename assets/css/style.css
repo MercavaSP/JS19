@@ -1,3 +1,7 @@
 h1 {
-  color: red;
+  width: 100wv;
+  height: 100hv;
+  color: #252525;
+  text-align: center;
+  padding-top: 10rem;
 }
