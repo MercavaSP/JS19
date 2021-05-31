@@ -1,5 +1,5 @@
 {
-    let num = 266219;
+//     let num = 266219;
    
     
 
@@ -9,12 +9,12 @@
     console.log((num**3).toString().substring(0, 2));
 
 // Вторая задание - решение 1 (подсмотрено и не совсем понятно как работает. )
-    let result = 1;
-    while(num) {
-        result *= (num % 10);
-        num = Math.floor(num/10);
-    }
-    console.log(result);
+//     let result = 1;
+//     while(num) {
+//         result *= (num % 10);
+//         num = Math.floor(num/10);
+//     }
+//     console.log(result);
       
 }
 
@@ -32,3 +32,5 @@
     }
 
     console.log(ans);
+    console.log(ans**3);
+    console.log((ans**3).toString().substring(0, 2));
