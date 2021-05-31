@@ -30,7 +30,7 @@
     console.log('Сумма расхода 2: ' + amount2);
     console.log('Доход за месяц: ' + budgetMonth);
 
-    if (budgetDay >= 1200) {
+  /*  if (budgetDay >= 1200) {
         console.log('У вас высокий уровень дохода');
     } else if (budgetDay >= 600) {
         console.log('У вас средний уровень дохода');
@@ -40,4 +40,16 @@
         console.log('Что то пошло не так');
     }
     
+   */
+
+    if (budgetDay >= 1200) {
+        console.log('У вас высокий уровень дохода');
+    } else if (budgetDay >= 600 && budgetDay <= 1200) {
+        console.log('У вас средний уровень дохода');
+    } else if (budgetDay >= 0 && budgetDay <= 600) {
+        console.log('К сожалению у вас уровень доход ниже среднего');
+    } else {
+        console.log('Что то пошло не так');
+    }
+
     
