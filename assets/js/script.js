@@ -1,5 +1,6 @@
 'use strict';
 
+
     let money = +prompt('Ваш месячный доход?');
     let income = null;
     let addExpenses = prompt('Перечислите возможные расходы через запятую');
@@ -13,7 +14,9 @@
     let budgetMonth = money - (amount2 + amount1);
     let budgetDay = Math.floor(budgetMonth / 30);
     let period = Math.round(mission / budgetMonth);
-        
+    
+    
+    
     console.log('Зарплата: ' + money);
     console.log(income);
     console.log(deposit);
