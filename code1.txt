@@ -92,11 +92,15 @@
         }
     };
     
+    
+    
+    
     showTypeOf(money);
     showTypeOf(income);
     showTypeOf(deposit);
     console.log('расход за месяц: ' + expensesAmount);
     console.log(addExpenses.toLowerCase().split(', '));
+    
     
     function monthCheck() {
 
