@@ -11,10 +11,6 @@
     let addExpenses = prompt('Перечислите возможные расходы через запятую');
     let deposit = confirm('Есть ли у вас депозит в банке?');
     const mission = 2000;
-    
-    let addExpenses1,
-        addExpenses2;
-
 
     let start = function() {
         // money = prompt('Ваш месячный доход?');
@@ -22,7 +18,6 @@
         // while (!isNumber(money)) {
         //     money = prompt('Ваш месячный доход?');
         // }
-        
 
         do {
             money = prompt('Ваш месячный доход?');
@@ -46,23 +41,24 @@
     let showTypeOf = function(data) {
         console.log(data, typeof(data));
     };
-    let expensesAmount = getExpensesMonth();
     
+    let expenses = [];
+    
+    let expensesAmount = getExpensesMonth();
+
     function getExpensesMonth() {
 
         let sum = 0;
         
         for (let i = 0; i < 2; i++) {
 
-            if (i === 0) {
-                addExpenses1 = prompt('Введите обязательные расходы?', );
-            } else if (i === 1) {
-                addExpenses2 = prompt('Введите обязательные расходы?', );
-            }
+            expenses[i] = prompt('Введите обязательные расходы');
+            let a;
            do {
-            sum += +prompt('Во сколько это обойдется?');
+            a = prompt('Во сколько это обойдется?');
             }
-            while (!isNumber(sum));
+            while (!isNumber(a));
+            sum += +a;
         }
         console.log(sum, typeof(sum));
         return sum;   
@@ -97,6 +93,7 @@
     showTypeOf(deposit);
     console.log('расход за месяц: ' + expensesAmount);
     console.log(addExpenses.toLowerCase().split(', '));
+    
     
     function monthCheck() {
 
