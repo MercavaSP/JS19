@@ -1,0 +1,103 @@
+'use strict';
+
+let isNumber = function(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
+let money,
+    start = function() {
+        do {
+            money = prompt('Ваш месячный доход?');
+        }
+        while (!isNumber(money));
+    };
+
+start();
+
+let appData = {
+    income: {},
+    addIncome: [],
+    expenses: {},
+    addExpenses: [],
+    deposit: false,
+    mission: 50000,
+    period: 3,
+    budget: money,
+    budgetDay: 0,
+    budgetMonth: 0,
+    expensesMonth: 0,
+    asking: function(){
+        let addExpenses = prompt('Перечислите возможные расходы через запятую');
+            appData.addExpenses = addExpenses.toLowerCase().split(', ');
+            appData.deposit = confirm('Есть ли у вас депозит в банке?');
+    }
+};
+    
+    appData.asking();
+    
+    appData.getExpensesMonth = function getExpensesMonth() {
+    
+        let sum = 0,
+            expenses = [];
+
+    for (let i = 0; i < 2; i++) {
+        expenses[i] = prompt('Введите обязательные расходы');
+        let a;
+    do {
+            a = prompt('Во сколько это обойдется?');
+        }
+        while (!isNumber(a));
+            sum += +a;
+        }
+        return sum;   
+    };
+
+    
+    appData.getAccumulatedMonth = function getAccumulatedMonth() {
+        return money - expensesAmount;
+    };
+    
+    let expensesAmount = appData.getExpensesMonth();
+    let accumulatedMonth = appData.getAccumulatedMonth();
+    
+
+    appData.getTargetMonth = function getTargetMonth() {
+        return Math.round(appData.mission / accumulatedMonth);
+    };
+
+    
+    let budgetDay = Math.floor(accumulatedMonth / 30);            
+    let getStatusIncome = function() {
+        
+        if (budgetDay >= 1200) {
+            return ('У вас высокий уровень дохода');
+        } else if (budgetDay >= 600 && budgetDay <= 1200) {
+            return ('У вас средний уровень дохода');
+        } else if (budgetDay >= 0 && budgetDay <= 600) {
+            return ('К сожалению у вас уровень доход ниже среднего');
+        } else {
+            return ('Что то пошло не так');
+        }
+    };
+    
+    
+    console.log('расход за месяц: ' + expensesAmount);
+        
+    function monthCheck() {
+
+        if (appData.getTargetMonth() >= 0) {
+            return ('Cрок достижения цели в месяцах: ' + appData.getTargetMonth());
+        } else {
+            return ('Цель не будет достигнута');
+        }
+
+    }
+    
+    console.log(monthCheck());
+
+    
+    console.log('Бюджет на день: ' + budgetDay);
+    console.log(getStatusIncome());
+
+
+    
