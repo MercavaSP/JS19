@@ -8,7 +8,7 @@ let isNumber = function(n) {
 let money;
 let start = function() {
        do {
-            money = prompt('Ваш месячный доход?');
+            money = prompt('Ваш месячный доход?', 50000);
         }
         while (!isNumber(money));
     };
@@ -49,12 +49,13 @@ let appData = {
 
 
   getExpensesMonth: function() {
-    let expensesMonth = 0;
+    // let expensesMonth = 0;
     for (const key in appData.expenses) {
-      expensesMonth +=appData.expenses[key];
+      appData.expensesMonth +=appData.expenses[key];
     }
-    console.log('Расходы за месяц: ', expensesMonth);
-    return expensesMonth;
+    console.log('Расходы за месяц: ', appData.expensesMonth);
+    return appData.expensesMonth;
+    
   },
 
   getBudget: function () {
@@ -91,8 +92,9 @@ let appData = {
 appData.asking();
     
               
-appData.getExpensesMonth();
 appData.getTargetMonth();
+appData.getBudget();
+appData.getExpensesMonth();
 console.log(appData.getStatusIncome());
 console.log("expenses", appData.expenses);
 console.log(`Наша программа включает в себя данные:`);
