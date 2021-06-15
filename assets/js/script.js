@@ -75,9 +75,9 @@ let appData = {
     let sum = 0,
         message;
     for (let i = 0; i < 2; i++) {
-        message = prompt(`Введите обязательные расходы`);
+        message = stringValidate(`Введите обязательные расходы`);
         do {
-            sum = +prompt('Во сколько это обойдется?');
+            sum = +numberValidate('Во сколько это обойдется?');
         }
             while(!isNumber(sum));  
             appData.expenses[message] = sum;
