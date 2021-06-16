@@ -169,7 +169,7 @@ console.log(str.join(', '));
 
 
 // Кнопку "Рассчитать" через id
-const countBtn = document.getElementByID('start');
+const countBtn = document.getElementById('start');
 
 // Кнопки “+” (плюс) через Tag, каждую в своей переменной. 
 
@@ -186,8 +186,23 @@ const addIncomeField = document.querySelectorAll('.additional_income-item');
 
 // Каждый элемент в правой части программы через класс(не через querySelector), которые имеют в имени класса "-value", начиная с class="budget_day-value" и заканчивая class="target_month-value">
 
-
+const budgetDayVal = document.getElementsByClassName('.budget_day-value');
+const expensesMonthVal = document.getElementsByClassName('.expenses_month-value');
+const addIncomeVal = document.getElementsByClassName('.additional_income-value');
+const addExpensesVal = document.getElementsByClassName('.additional_expenses-value');
+const incomePeriodVal = document.getElementsByClassName('.income_period-value');
+const targetMonthVal = document.getElementsByClassName('.target_month-value');
 
 // Оставшиеся поля через querySelector каждый в отдельную переменную:
 // поля ввода (input) с левой стороны и не забудьте про range.
+
+const salaryAmount = document.querySelector('.salary-amount');
+const incomTitle = document.querySelector('.income-title');
+const incomeAmount = document.querySelector('.income-amount');
+const additionalIncome-item = document.querySelector('.additional_income-item');
+const expensesTitle = document.querySelector('.expenses-title');
+const expensesAmount = document.querySelector('.expenses-amount');
+const additionalExpensesItem = document.querySelector('.additional_expenses-item');
+const targetAmount = document.querySelector('.target-amount');
+const periodSelect = document.querySelector('.period-select');
 
