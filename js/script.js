@@ -16,6 +16,8 @@ const render = function(){
     todoList.textContent = '';
     todoCompleted.textContent = '';
     
+    localStorage.setItem('newTodo', JSON.stringify(todoData));
+
 
     todoData.forEach(function(item, i){
         const li = document.createElement('li');
@@ -64,7 +66,6 @@ todoControl.addEventListener('submit', function(event){
 
     todoData.push(newTodo);
 
-    localStorage.setItem('newTodo', JSON.stringify(todoData));
 
     render();
 });
