@@ -148,10 +148,10 @@ let appData = {
   getAddExpenses: function() {
     this.addExpenses = [];
     let addExpenses = additionalExpensesItem.value.split(',');
-    addExpenses.forEach(el => {
-      el = el.trim();
-      if (el !== '') {
-        this.addExpenses.push(el);
+    addExpenses.forEach(function(item) {
+      item = item.trim();
+      if (item !== '') {
+        this.addExpenses.push(item);
       }
     });
   },
