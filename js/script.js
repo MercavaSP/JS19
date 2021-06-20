@@ -56,7 +56,7 @@ const validateString = function (question, answer) {
 function disabledInputText() {
   let inpitText = document.querySelectorAll('[type="text"]:not(.result-total)');
 
-  inpitText.forEach(element => {
+  inpitText.forEach( function(element) {
     element.disabled = true;
   });
   countBtn.style.display = 'none';
@@ -118,7 +118,7 @@ let appData = {
     }
   },  
   getExpenses: function() {
-    expensesItems.forEach((item) => {
+    expensesItems.forEach(function(item){
       let itemExpenses = item.querySelector('.expenses-title').value;
       let cashExpenses = item.querySelector('.expenses-amount').value;
       if (itemExpenses !== '' && cashExpenses !== '') {
@@ -138,10 +138,10 @@ let appData = {
   },
   getAddIncome: function() {
     this.addIncome = [];    
-    additionalIncomeItems.forEach((el) => {
-      let elValue = el.value.trim();
-      if (elValue !== '') {
-        this.addIncome.push(elValue);
+    additionalIncomeItems.forEach(function(item) {
+      let itemValue = item.value.trim();
+      if (itemValue !== '') {
+        this.addIncome.push(itemValue);
       }
     });   
   },
@@ -156,9 +156,9 @@ let appData = {
     });
   },
   getIncome: function() {
-    incomeItems.forEach((el) => {
-      let itemIncome = el.querySelector('.income-title').value;
-      let cashIncome = el.querySelector('.income-amount').value;
+    incomeItems.forEach(function(item) {
+      let itemIncome = item.querySelector('.income-title').value;
+      let cashIncome = item.querySelector('.income-amount').value;
       if (itemIncome !== '' && cashIncome !== '') {
         this.income[itemIncome] = cashIncome;
       }
@@ -213,11 +213,11 @@ let appData = {
     let inputAll = document.querySelectorAll('input:not(.period-select)');
     countBtn.disabled = false;   
   
-    inputAll.forEach(element => {
+    inputAll.forEach(function(element) {
       element.value = '';    
     });
   
-    inputText.forEach(element => {
+    inputText.forEach(function(element) {
       element.disabled = false;
     });
   
@@ -238,14 +238,14 @@ let appData = {
     cancelBtn.style.display = 'none';
     periodSelect.value = 1;
     periodAmount.textContent = periodSelect.value;
-    incomeItems.forEach((element, i) => {  
+    incomeItems.forEach(function(element, i) {  
       if (i !== 0) {
         element.remove();
       }
     });
     incomePlus.style.display = 'block';
   
-    expensesItems.forEach((element, i) => {  
+    expensesItems.forEach(function(element, i) {  
       if (i !== 0) {
         element.remove();
       }
@@ -260,7 +260,7 @@ cancelBtn.addEventListener('click', appData.reset.bind(appData));
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 periodSelect.addEventListener('input', appData.changlePeriodSelect.bind(appData));
-salaryAmount.addEventListener('input', () => {
+salaryAmount.addEventListener('input', function() {
   if (salaryAmount.value !== '') {
     countBtn.disabled = false;    
    } else {
