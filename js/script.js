@@ -1,37 +1,40 @@
 'use strict';
 
-const body = document.querySelector('body');
+const wrapper = document.querySelector('.wrapper');
+
 function DomElement(selector, height, width, bg, fontSize) {
-  this.selector = selector;
-  this.height = height;
-  this.width = width;
-  this.bg = bg;
-  this.fontSize = fontSize;
+   this.selector = selector;
+   this.height = height;
+   this.width = width;
+   this.bg = bg;
+   this.fontSize = fontSize;
 }
 
-DomElement.prototype.render = function() {
-  let newElement;
-  if (this.selector[0] === '.') {
-    newElement = document.createElement('div');
-    newElement.classList.add('block');
-  } else if (this.selector[0] === '#') {
-    newElement = document.createElement('p');
-    newElement.classList.add('best');
-  }
+DomElement.prototype.create = function () {
+   let newElem;
+   if (this.selector[0] === '.') {
+      newElem = document.createElement('div');
+      newElem.classList.add(this.selector.substr(1));
+      // wrap.append(newElem);
+   } else {
+      newElem = document.createElement('p');
+      newElem.setAttribute("id", this.selector.substr(1));
+      // wrap.append(newElem);
+   }
 
-  newElement.style.cssText = `
-    height:  ${this.height}px;
-    width:  ${this.width}px;
-    background:  ${this.bg};
-    font-size:  ${this.fontSize}px;
-  `;
-  newElement.textContent = 'hi';
-  body.append(newElement);
-  console.log('newElement: ', newElement);
+   newElem.style.width = this.width + 'px';
+   newElem.style.height = this.height + 'px';
+   newElem.style.backgroundColor = this.bg;
+   newElem.style.fontSize = this.fontSize + 'px';
+
+   newElem.textContent = 'Привет мир!';
+
+  console.log('newElement: ', newElem);
+
+
 };
 
-let newDomElements = new DomElement('.id', 100, 50, 'green', 30);
-newDomElements.render();
-
-let newDomElements2 = new DomElement('#id', 50, 50, 'yellow', 10);
-newDomElements2.render();
+let newElem2 = new DomElement('.abc', 150, 150, 'palegreen', 34);
+let newElem3 = new DomElement('#abc', 150, 15, 'darkcyan', 34);
+newElem2.create();
+newElem3.create();
