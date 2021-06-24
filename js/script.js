@@ -1,6 +1,6 @@
 'use strict';
 
-const wrapper = document.querySelector('.wrapper');
+const wrapper = document.querySelector('body');
 
 function DomElement(selector, height, width, bg, fontSize) {
    this.selector = selector;
@@ -27,7 +27,8 @@ DomElement.prototype.create = function () {
    newElem.style.backgroundColor = this.bg;
    newElem.style.fontSize = this.fontSize + 'px';
 
-   newElem.textContent = 'Привет мир!';
+   newElem.textContent = 'Хелоу';
+  wrapper.append(newElem);
 
   console.log('newElement: ', newElem);
 
@@ -35,6 +36,8 @@ DomElement.prototype.create = function () {
 };
 
 let newElem2 = new DomElement('.abc', 150, 150, 'palegreen', 34);
-let newElem3 = new DomElement('#abc', 150, 15, 'darkcyan', 34);
 newElem2.create();
+
+
+let newElem3 = new DomElement('#abc', 100, 100, 'darkcyan', 34);
 newElem3.create();
