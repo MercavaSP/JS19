@@ -78,39 +78,28 @@ const AppData = function() {
   this.expensesMonth = 0;
 };
 
-// AppData.prototype.check = function() {
-//   if (salaryAmount.value === '') {
-//      countBtn.remuveAttribute('disabled');
-//   }
-// };
+AppData.prototype.check = function() {
+  if (salaryAmount.value === '') {
+     countBtn.remuveAttribute('disabled');
+  }
+};
 
-AppData.prototype.start = function() {
-    if (salaryAmount.value === '') {
-     countBtn.setAttribute('disabled', 'true');
-      return;
-    }
+AppData.prototype.start = function () {
+  if (salaryAmount.value === '') {
+   countBtn.disabled = true;
+    return;
+  }
+  this.budget = +salaryAmount.value;
+  
+  this.getExpenses(); 
+  this.getIncome();
+  this.getExpensesMonth();
+  this.getAddExpenses();
+  this.getAddIncome();
+  this.getBudget();
 
-    let allInputs = document.querySelectorAll('.data input[type = text');
-    allInputs.forEach(function (item) {
-      item.setAttribute('disabled', 'true');
-    });
-    incomePlus.setAttribute('disabled', 'true');
-    expensesPlus.setAttribute('disabled', 'true');
-    countBtn.style.display = 'none';
-    cancelBtn.style.display = 'blosk';
-
-    this.budget = +salaryAmount.value;
-    
-    this.getExpenses(); 
-    this.getIncome();
-    this.getExpensesMonth();
-    this.getAddExpenses();
-    this.getAddIncome();
-    this.getBudget();
-
-    this.showResult();
-    disabledInputText();
-    
+  this.showResult();
+  disabledInputText();
 };
 
 AppData.prototype.showResult = function() {
@@ -121,7 +110,6 @@ AppData.prototype.showResult = function() {
     additionalExpensesValue.value = this.addExpenses.join(', ');
     additionalIncomeValue.value = this.addIncome;
     targetMonthValue.value = Math.ceil(this.getTargetMonth());
-
     incomePeriodValue.value = this.calcPeriodMoney() ;
 
 };
@@ -201,12 +189,7 @@ AppData.prototype.getTargetMonth = function() {
     
     return targetAmount.value / this.budgetMonth;
 };
-AppData.prototype.getInfoDeposit = function() {
-    if (this.deposit) {
-      this.percentDeposit = validateNumber('Какой годовой процент', 10);
-      this.moneyDeposit = validateNumber('Какая сумма заложена?', 10000);
-    }
-};
+
 AppData.prototype.calcPeriodMoney = function() {
     return (+this.budgetMonth) * +periodSelect.value;
 };
