@@ -68,7 +68,7 @@ function disabledInputText() {
   });
   countBtn.style.display = 'none';
   cancelBtn.style.display = 'block';
-  depositCheck;
+  // depositCheck;
 }
 
 class AppData {
