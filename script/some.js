@@ -17,14 +17,14 @@ window.addEventListener('DOMContentLoaded', () => {
         ];
 
         function getTimeRemaining() {
-            const dateNow = new Date();
-            const dateStop = new Date(deadline).getTime();
-            const weekDay = weekDays[dateNow.getDay()];
-            const timeRemaining = (dateStop - dateNow.getTime()) / 1000;
+            const dateNow = new Date(),
+                dateStop = new Date(deadline).getTime(),
+                weekDay = weekDays[dateNow.getDay()],
+                timeRemaining = (dateStop - dateNow.getTime()) / 1000;
 
-            let seconds = dateNow.getSeconds();
-            let minutes = dateNow.getMinutes();
-            let hours = dateNow.getHours();
+            let seconds = dateNow.getSeconds(),
+                minutes = dateNow.getMinutes(),
+                hours = dateNow.getHours();
             const days = Math.floor(timeRemaining / 60 / 60 / 24);
 
             function putZero(value) {
