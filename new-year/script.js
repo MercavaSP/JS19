@@ -27,8 +27,8 @@ window.addEventListener('DOMContentLoaded', () => {
             let hours = dateNow.getHours();
             const days = Math.floor(timeRemaining / 60 / 60 / 24);
 
-            function putZero(value) {
-                value += '';
+            function formatTime(value) {
+                // value += '';
 
                 if (value.length < 2) {
                     value = '0' + value;
@@ -37,9 +37,9 @@ window.addEventListener('DOMContentLoaded', () => {
                 return value;
             }
 
-            hours = putZero(hours);
-            minutes = putZero(minutes);
-            seconds = putZero(seconds);
+            hours = formatTime(hours);
+            minutes = formatTime(minutes);
+            seconds = formatTime(seconds);
 
             return { timeRemaining, seconds, minutes, hours, days, weekDay };
         }
@@ -100,5 +100,5 @@ window.addEventListener('DOMContentLoaded', () => {
         interval = setInterval(updateClock, 1000);
     }
 
-    timer('31 dec 2021');
+    timer('31 december 2021');
 });
