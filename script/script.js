@@ -1,7 +1,7 @@
 'use strict';
 
 window.addEventListener("DOMContentLoaded", () => {
-    // таймер
+    /* -==== Таймер ====- */
     function countTimer(deadline) {
         const timerHours = document.querySelector('#timer-hours');
         const timerMinutes = document.querySelector('#timer-minutes');
@@ -43,7 +43,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     countTimer('06 july 2021');
 
-    //!menu
+    /* -==== Меню ====- */  
     const menu = document.querySelector('menu'),
         menuItems = menu.querySelectorAll('ul>li>a');
 
@@ -111,8 +111,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     toggleMenu();
 
-
-    //!popup
+    /* -==== PopUp ====- */
     const togglePopUp = () => {
 
         const popup = document.querySelector('.popup'),
@@ -156,4 +155,8 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     togglePopUp();
+
+
+    /* -==== PopUp ====- */
+
 });
