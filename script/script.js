@@ -87,7 +87,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
         const timoutsMenu = [];
 
-        const sizeMenu = () => {
+        const menuAnimCancel = () => {
             timoutsMenu.push(setTimeout(() => {
                 timoutsMenu.forEach(item => clearTimeout(item));
 
@@ -102,8 +102,8 @@ window.addEventListener("DOMContentLoaded", () => {
         };
 
 
-        window.addEventListener('resize', sizeMenu);
-        window.addEventListener('load', sizeMenu);
+        window.addEventListener('resize', menuAnimCancel);
+        window.addEventListener('load', menuAnimCancel);
         closeBtn.addEventListener('click', closeMenu);
         menuItems.forEach(elem => elem.addEventListener('click', closeMenu));
 
@@ -133,7 +133,7 @@ window.addEventListener("DOMContentLoaded", () => {
         };
 
         const timoutsPopup = [];
-        const animCancel = () => {
+        const popupAimCancel = () => {
             timoutsPopup.push(setTimeout(() => {
                 timoutsPopup.forEach(item => clearTimeout(item));
 
@@ -145,8 +145,8 @@ window.addEventListener("DOMContentLoaded", () => {
             }, 500));
         };
 
-        animCancel();
-        window.addEventListener('resize', animCancel);
+        popupAimCancel();
+        window.addEventListener('resize', popupAimCancel);
 
         popupClose.addEventListener('click', () => {
             popup.style.transform = 'translateY(-100%)';
@@ -157,6 +157,5 @@ window.addEventListener("DOMContentLoaded", () => {
     togglePopUp();
 
 
-    /* -==== PopUp ====- */
 
 });
