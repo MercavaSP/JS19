@@ -44,17 +44,19 @@ window.addEventListener("DOMContentLoaded", () => {
     countTimer('06 july 2021');
 
     /* -==== Меню ====- */
+
     const menu = document.querySelector('menu'),
-        menuItems = menu.querySelectorAll('ul>li>a');
+        // menuItems = menu.querySelectorAll('ul>li>a'),
+        body = document.querySelector('body');
 
     const toggleMenu = () => {
-        const btnMenu = document.querySelector('.menu'),
-            closeBtn = document.querySelector('.close-btn');
+        // const btnMenu = document.querySelector('.menu');
 
         let count = -50,
-            intervalMenu;
+            intervalMenu,
+            menuFlag = false;
 
-        const handlerAnimate = () => {
+        let handlerAnimate = () => {
             intervalMenu = requestAnimationFrame(handlerAnimate);
             if (count < 0) {
                 count++;
@@ -64,19 +66,21 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        const closeMenu = () => {
+        let closeMenu = () => {
             menu.style.transform = `translate(-100%)`;
             count = -50;
+            menuFlag = false;
+            cancelAnimationFrame(intervalMenu);
         };
 
-        const eventAnim = () => {
+        let eventAnim = () => {
             if (menu.style.transform && menu.style.transform === `translate(0%)`) {
                 closeMenu();
             } else {
                 intervalMenu = requestAnimationFrame(handlerAnimate);
             }
         };
-        const eventWithoutAnim = () => {
+        let eventWithoutAnim = () => {
             if (menu.style.transform && menu.style.transform === `translate(0%)`) {
                 closeMenu();
             } else {
@@ -85,31 +89,55 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        const timoutsMenu = [];
+        let selectPart = (e, animationFlag) => {
+            let target = e.target;
 
-        const menuAnimCancel = () => {
+            if (target.closest('.menu')) {
+                menuFlag = true;
+                if (animationFlag) {
+                    eventAnim();
+                } else {
+                    eventWithoutAnim();
+                }
+            } else {
+
+                if (target.closest('menu') && target.closest('A') || !target.closest('menu') && menuFlag) {
+                    closeMenu();
+                }
+            }
+
+        };
+
+        let animetionEvent = (e) => {
+            selectPart(e, true);
+        };
+
+        let noAnimetionEvent = (e) => {
+            selectPart(e, false);
+        };
+
+        let timoutsMenu = [];
+
+        let sizeMenu = () => {
             timoutsMenu.push(setTimeout(() => {
                 timoutsMenu.forEach(item => clearTimeout(item));
 
                 if (window.innerWidth >= 768) {
-                    btnMenu.removeEventListener('click', eventWithoutAnim);
-                    btnMenu.addEventListener('click', eventAnim);
+                    body.addEventListener('click', animetionEvent);
+                    body.removeEventListener('click', noAnimetionEvent);
                 } else {
-                    btnMenu.removeEventListener('click', eventAnim);
-                    btnMenu.addEventListener('click', eventWithoutAnim);
+                    body.addEventListener('click', noAnimetionEvent);
+                    body.removeEventListener('click', animetionEvent);
                 }
             }, 500));
         };
 
-
-        window.addEventListener('resize', menuAnimCancel);
-        window.addEventListener('load', menuAnimCancel);
-        closeBtn.addEventListener('click', closeMenu);
-        menuItems.forEach(elem => elem.addEventListener('click', closeMenu));
-
+        window.addEventListener('resize', sizeMenu);
+        window.addEventListener('load', sizeMenu);
     };
 
     toggleMenu();
+
 
     /* -==== PopUp ====- */
     const togglePopUp = () => {
@@ -156,6 +184,39 @@ window.addEventListener("DOMContentLoaded", () => {
 
     togglePopUp();
 
+    /* -==== Табы ====- */
+
+    const tabs = () => {
+        const tabHeader = document.querySelector('.service-header'),
+            tab = tabHeader.querySelectorAll('.service-header-tab'),
+            tabContent = document.querySelectorAll('.service-tab');
+
+        const toggleTabContent = index => {
+            for (let i = 0; i < tabContent.length; i++) {
+                if (index === i) {
+                    tab[i].classList.add('active');
+                    tabContent[i].classList.remove('d-none');
+                } else {
+                    tab[i].classList.remove('active');
+                    tabContent[i].classList.add('d-none');
+                }
+            }
+        };
+
+        tabHeader.addEventListener('click', (event) => {
+            let target = event.target;
+            target = target.closest('.service-header-tab');
+
+            if (target.classList.contains('service-header-tab')) {
+                tab.forEach((item, index) => {
+                    if (item === target) {
+                        toggleTabContent(index);
+                    }
+                });
+            }
+        });
+    };
+    tabs();
 
     /* -==== Слайдер ====- */
 
@@ -264,5 +325,90 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     slider();
+
+
+    /* -==== Команда ====- */
+
+    const team = document.getElementById('command');
+
+
+    team.addEventListener('mouseover', (event) => {
+        let target = event.target;
+
+        if (target.matches('.command__photo')) {
+            target.dataset.first = target.src;
+            target.src = target.dataset.img;
+        }
+    });
+
+    team.addEventListener('mouseout', (event) => {
+        let target = event.target;
+
+        if (target.matches('.command__photo')) {
+            target.src = target.dataset.first;
+            target.removeAttribute('data-first');
+        }
+    });
+
+
+
+    /* -==== проверка ввода в инпуты ====- */
+
+    const calcBlock = document.querySelector('.calc-block');
+
+    calcBlock.addEventListener('input', (event) => {
+        let target = event.target;
+
+        if (target.matches('INPUT')) {
+            target.value = target.value.replace(/\D/,'');
+        }
+    });
+
+    body.addEventListener('input', (event) => {
+        let target = event.target;
+
+        console.log(event.inputType);
+        if (event.inputType === 'insertFromPaste') {
+            target.value = '';
+            return;
+        }
+
+        if (target.matches('#form2-name,#form2-message,#form1-name')) {
+            target.value = target.value.replace(/[^а-я\s\-]/i,'');
+        } else if (target.matches('#form2-email,#form1-email')) {
+            target.value = target.value.replace(/[^a-z\@\-\_\.\!\~\*\']/gi, '');
+            console.log(target.value);
+        } else if (target.matches('#form2-phone,#form1-phone')) {
+            target.value = target.value.replace(/[^\d\(\)\-]/i, '');
+        }
+    });
+
+    body.addEventListener('focusout', (event) => {
+        let target = event.target;
+
+        if (target.value) {
+
+            if (target.matches('#form2-name,#form2-message,#form1-name')) {
+                target.value = target.value.replace(/^\s+|\s+$/g, '');
+                target.value = target.value.replace(/\s{2,}/g, ' ');
+            } else if (target.matches('#form2-email,#form1-email')) {
+                target.value = target.value.replace(/^\-+|\-+$/g, '');
+                target.value = target.value.replace(/\-{2,}/g, '-');
+                console.log(target.value);
+            } else if (target.matches('#form2-phone,#form1-phone')) {
+                target.value = target.value.replace(/^\-+|\-+$/g, '');
+                target.value = target.value.replace(/\-{2,}/g, '-');
+            }
+
+            if (target.matches('#form2-name,#form1-name')) {
+                let str = target.value;
+                str = str.split(' ');
+                str.forEach((el, id) => str[id] = el[0].toUpperCase() + el.substring(1).toLowerCase());
+                str = str.join(' ');
+                target.value = str;
+            }
+        }
+    });
+
 
 });
