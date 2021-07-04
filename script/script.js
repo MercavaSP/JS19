@@ -108,12 +108,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
         };
 
-        let animetionEvent = (e) => {
-            selectPart(e, true);
+        let animetionEvent = (elem) => {
+            selectPart(elem, true);
         };
 
-        let noAnimetionEvent = (e) => {
-            selectPart(e, false);
+        let noAnimetionEvent = (elem) => {
+            selectPart(elem, false);
         };
 
         let timoutsMenu = [];
@@ -367,7 +367,6 @@ window.addEventListener("DOMContentLoaded", () => {
     body.addEventListener('input', (event) => {
         let target = event.target;
 
-        console.log(event.inputType);
         if (event.inputType === 'insertFromPaste') {
             target.value = '';
             return;
@@ -377,7 +376,6 @@ window.addEventListener("DOMContentLoaded", () => {
             target.value = target.value.replace(/[^а-я\s\-]/i,'');
         } else if (target.matches('#form2-email,#form1-email')) {
             target.value = target.value.replace(/[^a-z\@\-\_\.\!\~\*\']/gi, '');
-            console.log(target.value);
         } else if (target.matches('#form2-phone,#form1-phone')) {
             target.value = target.value.replace(/[^\d\(\)\-]/i, '');
         }
@@ -394,7 +392,6 @@ window.addEventListener("DOMContentLoaded", () => {
             } else if (target.matches('#form2-email,#form1-email')) {
                 target.value = target.value.replace(/^\-+|\-+$/g, '');
                 target.value = target.value.replace(/\-{2,}/g, '-');
-                console.log(target.value);
             } else if (target.matches('#form2-phone,#form1-phone')) {
                 target.value = target.value.replace(/^\-+|\-+$/g, '');
                 target.value = target.value.replace(/\-{2,}/g, '-');
@@ -410,5 +407,56 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    /* -==== Калькулятор столимости ====- */
+
+    const calc = (price = 100) => {
+        const calcBlock = document.querySelector('.calc-block'),
+            calcType = document.querySelector('.calc-type'),
+            calcSquare = document.querySelector('.calc-square'),
+            calcCount = document.querySelector('.calc-count'),
+            calcDay = document.querySelector('.calc-day'),
+            totalValue = document.getElementById('total');
+
+        const countSum = () => {
+            let total = 0,
+                countValue = 1,
+                dayValue = 1;
+            const typeValue = calcType.options[calcType.selectedIndex].value,
+                squareValue = +calcSquare.value;
+
+            if (calcCount.value > 1) {
+                countValue += (calcCount.value - 1) / 10;
+            }
+
+            if (calcDay.value && calcDay.value < 5) {
+                dayValue *= 2;
+            } else if (calcDay.value && calcDay.value < 10) {
+                dayValue *= 1.5;
+            }
+
+            if (typeValue && squareValue) {
+                total = price * typeValue * squareValue * countValue * dayValue;
+            }
+
+
+            totalValue.textContent = total;
+
+        };
+
+        calcBlock.addEventListener('change', (event) => {
+            const target = event.target;
+
+            if (target === calcType ||
+                target === calcSquare ||
+                target === calcDay ||
+                target === calcCount) {
+                countSum();
+            }
+
+        });
+
+    };
+
+    calc(100);
 
 });
