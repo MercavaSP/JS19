@@ -452,17 +452,17 @@ window.addEventListener("DOMContentLoaded", () => {
     /* -==== AJAX рассылка ====- */
 
     const sendForm = () => {
-        const forms = document.querySelectorAll('form'),
-            statusMessage = document.createElement('div'),
-            successMessage = 'Спасибо! Скоро рассмотрим вашу заявку!',
-            errorMessage = 'Ой что-то пошло не так!';
-        statusMessage.style.cssText = 'color: white';
+        const forms = document.querySelectorAll('form');
+        const statusMessage = document.createElement('div');
 
-        // очищаем инпуты
+        const successMessage = 'Спасибо! Скоро рассмотрим вашу заявку!',
+            errorMessage = 'Ой что-то пошло не так!';
+
         const clearInput = (forms) => {
             const inputs = forms.querySelectorAll('input');
             inputs.forEach(input => {
                 input.value = '';
+                input.classList.remove('success');
             });
         };
 
@@ -470,64 +470,62 @@ window.addEventListener("DOMContentLoaded", () => {
             statusMessage.textContent = data;
         };
 
-        const postData = (body, forms) => {
-            const promise = new Promise((resolve, reject) => {
-                const request = new XMLHttpRequest();
-
-                request.addEventListener('readystatechange', () => {
-                    if (request.readyState !== 4) {
-                        return;
-                    }
-
-                    if (request.status === 200) {
-                        resolve(successMessage);
-                    } else {
-                        reject([request.response, errorMessage]);
-                    }
-
-                    setTimeout(() => {
-                        statusMessage.textContent = '';
-                    }, 3000);
-
-                });
-
-                request.open('POST', './server.php');
-                request.setRequestHeader('Content-Type', 'application/json');
-
-                request.send(JSON.stringify(body));
+        const postData = (body) => {
+            return fetch('./server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
             });
-
-            promise
-                .then(loadReqText)
-                .then(clearInput(forms))
-                .catch((error) => {
-                    console.error(error[0]);
-                    loadReqText(error[1]);
-                });
         };
 
         forms.forEach(elem => {
             elem.addEventListener('submit', (event) => {
                 event.preventDefault();
 
-                if (statusMessage) {
-                    statusMessage.textContent = '';
-                }
+                setTimeout(() => {
 
-                elem.appendChild(statusMessage);
+                    const subBtn = elem.querySelector('.form-btn');
+                    // console.log(subBtn);
+                    if (subBtn.classList.contains('cancel')) {
+                        return;
+                    }
+                    if (statusMessage) {
+                        statusMessage.textContent = '';
+                    }
 
-                const formData = new FormData(elem);
-                let body = {};
+                    elem.appendChild(statusMessage);
 
-                formData.forEach((val, key) => {
-                    body[key] = val;
-                });
+                    const formData = new FormData(elem);
+                    let body = {};
 
-                postData(body, elem);
+                    formData.forEach((val, key) => {
+                        body[key] = val;
+                    });
+
+                    postData(body)
+                        .then((response) => {
+                            if (response.status !== 200) {
+                                console.log('!');
+                                throw new Error('status network not 200');
+                            }
+                            loadReqText(successMessage);
+                            clearInput(elem);
+                            setTimeout(() => {
+                                statusMessage.textContent = '';
+                            }, 3000);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            loadReqText(errorMessage);
+                        });
+
+                }, 500);
+
             });
         });
     };
-
     sendForm();
 
 });
