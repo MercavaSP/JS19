@@ -3,9 +3,7 @@
 'use strict';
 
 window.addEventListener("DOMContentLoaded", () => {
-    
     /* -==== Таймер ====- */
-    
     function countTimer(deadline) {
         const timerHours = document.querySelector('#timer-hours');
         const timerMinutes = document.querySelector('#timer-minutes');
@@ -50,9 +48,11 @@ window.addEventListener("DOMContentLoaded", () => {
     /* -==== Меню ====- */
 
     const menu = document.querySelector('menu'),
+        // menuItems = menu.querySelectorAll('ul>li>a'),
         body = document.querySelector('body');
 
     const toggleMenu = () => {
+        // const btnMenu = document.querySelector('.menu');
 
         let count = -50,
             intervalMenu,
@@ -142,7 +142,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
     /* -==== PopUp ====- */
-    
     const togglePopUp = () => {
 
         const popup = document.querySelector('.popup'),
@@ -450,12 +449,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
     calc(100);
 
+    /* -==== AJAX рассылка ====- */
+
     const sendForm = () => {
         const forms = document.querySelectorAll('form'),
             statusMessage = document.createElement('div'),
             successMessage = 'Спасибо! Скоро рассмотрим вашу заявку!',
             errorMessage = 'Ой что-то пошло не так!';
         statusMessage.style.cssText = 'color: white';
+
         // очищаем инпуты
         const clearInput = (forms) => {
             const inputs = forms.querySelectorAll('input');
@@ -464,41 +466,54 @@ window.addEventListener("DOMContentLoaded", () => {
             });
         };
 
-        const postData = (body, outputData, errorData, forms) => {
-            const request = new XMLHttpRequest();
-
-            request.addEventListener('readystatechange', () => {
-                if (request.readyState !== 4) {
-                    return;
-                }
-
-                if (request.status === 200) {
-                    outputData();
-                } else {
-                    errorData(request.status);
-                }
-
-                clearInput(forms);
-
-                setTimeout(() => {
-                    statusMessage.textContent = '';
-                }, 3000);
-
-            });
-
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-
-            request.send(JSON.stringify(body));
+        const loadReqText = (data) => {
+            statusMessage.textContent = data;
         };
 
-        forms.forEach((elem) => {
+        const postData = (body, forms) => {
+            const promise = new Promise((resolve, reject) => {
+                const request = new XMLHttpRequest();
+
+                request.addEventListener('readystatechange', () => {
+                    if (request.readyState !== 4) {
+                        return;
+                    }
+
+                    if (request.status === 200) {
+                        resolve(successMessage);
+                    } else {
+                        reject([request.response, errorMessage]);
+                    }
+
+                    setTimeout(() => {
+                        statusMessage.textContent = '';
+                    }, 3000);
+
+                });
+
+                request.open('POST', './server.php');
+                request.setRequestHeader('Content-Type', 'application/json');
+
+                request.send(JSON.stringify(body));
+            });
+
+            promise
+                .then(loadReqText)
+                .then(clearInput(forms))
+                .catch((error) => {
+                    console.error(error[0]);
+                    loadReqText(error[1]);
+                });
+        };
+
+        forms.forEach(elem => {
             elem.addEventListener('submit', (event) => {
                 event.preventDefault();
 
                 if (statusMessage) {
                     statusMessage.textContent = '';
                 }
+
                 elem.appendChild(statusMessage);
 
                 const formData = new FormData(elem);
@@ -508,15 +523,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     body[key] = val;
                 });
 
-                postData(body,
-                    () => {
-                        statusMessage.textContent = successMessage;
-                    },
-                    (err) => {
-                        statusMessage.textContent = errorMessage;
-                        console.error(err);
-                    },
-                    elem);
+                postData(body, elem);
             });
         });
     };
