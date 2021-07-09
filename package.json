@@ -1,0 +1,28 @@
+{
+  "name": "3dglo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.prod.config.js",
+    "dev": "webpack serve --config webpack.dev.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MercavaSP/JS19.git"
+  },
+  "author": "Stanislavs Pipcenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MercavaSP/JS19/issues"
+  },
+  "homepage": "https://github.com/MercavaSP/JS19#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
