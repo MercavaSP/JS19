@@ -9,15 +9,7 @@ const formsRules = () => {
             return;
         }
 
-        if (target.matches('#form2-name,#form1-name')) {
-            target.value = target.value.replace(/[^а-я\s\-]/i, '');
-        } else if (target.matches('#form2-email,#form1-email')) {
-            target.value = target.value.replace(/[^a-z\@\-\_\.\!\~\*\']/gi, '');
-        } else if (target.matches('#form2-phone,#form1-phone')) {
-            target.value = target.value.replace(/[^\d\+]/g, '');
-        } else if ('#form2-message') {
-            target.value = target.value.replace(/[^а-я\s\d\.\,\?\!\;\:\(\)\"\-]/i, '');
-        }
+        
     });
 
     body.addEventListener('focusout', (e) => {
@@ -25,10 +17,10 @@ const formsRules = () => {
 
         if (target.value) {
 
-            if (target.matches('#form2-name,#form2-message,#form1-name')) {
+            if (target.matches('#form2-name,#form1-name'/*,#form2-message'*/)) {
                 target.value = target.value.replace(/^\s+|\s+$/g, '');
                 target.value = target.value.replace(/\s{2,}/g, ' ');
-            } else if (target.matches('#form2-email,#form1-email')) {
+            } else if (target.matches('#form2-email,#form1-email,#form3-email')) {
                 target.value = target.value.replace(/^\-+|\-+$/g, '');
                 target.value = target.value.replace(/\-{2,}/g, '-');
             }

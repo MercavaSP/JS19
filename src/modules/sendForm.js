@@ -31,7 +31,7 @@ const sendForm = () => {
                 inp.removeAttribute('style');
             }, 5000);
         };
-
+        
         const validateTel = (tel) => {
             let str = tel[0].value.replace('+', '').length;
             if (str < 8) {
@@ -58,12 +58,16 @@ const sendForm = () => {
 
                 }
                 if (target.name === 'user_name' || target.name === 'user_message') {
-                    target.value = target.value.replace(/[^а-я ]/gi, '');
+                    target.value = target.value.replace(/[^а-я \-\_\.\,\!\?\~\*\']/gi, '');
                 }
+                if (target.name === 'user_email') {
+                    target.value = target.value.replace(/[^a-z\@\-\_\.\']/gi, '');
+                }
+                
             });
 
             const postData = (body) => {
-                console.log('body: ', body);
+                // console.log('body: ', body);
                 return fetch('./server.php', {
                     method: 'POST',
                     headers: {
